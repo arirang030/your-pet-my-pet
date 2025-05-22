@@ -3,13 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     email: { type: DataTypes.STRING(100), allowNull: false, unique: true },
     password: { type: DataTypes.STRING(100), allowNull: false },
     name: { type: DataTypes.STRING(100), allowNull: false },
+    phoneNumber: { type: DataTypes.STRING(20), allowNull: false },
+    address: { type: DataTypes.STRING, allowNull: false },
+    hasBadge: { type: DataTypes.TINYINT, allowNull: false, defaultValue: 0 },
+  }, {
   }, {
     tableName: 'users',
     timestamps: false,
   });
 
   User.associate = models => {
-    User.hasOne(models.Profile, { foreignKey: 'userId' });
     User.hasMany(models.Pet, { foreignKey: 'userId' });
     User.hasMany(models.Match, { foreignKey: 'requesterId', as: 'RequestedMatches' });
     User.hasMany(models.Match, { foreignKey: 'caregiverId', as: 'CaregiverMatches' });
