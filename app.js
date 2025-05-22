@@ -9,13 +9,14 @@ dotenv.config();
 
 const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
+const petRouter = require('./routes/pet');
 
 const { sequelize } = require('./models/index');
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
 
-sequelize.sync( { force: true } )
+sequelize.sync( { force: false } )
   .then(() => {
     console.log('데이터베이스 연결 성공');
   })
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 // 라우터
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
+app.use('/pet', petRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
