@@ -8,6 +8,7 @@ const cors = require('cors');
 dotenv.config();
 
 const authRouter = require('./routes/auth');
+const profileRouter = require('./routes/profile');
 
 const { sequelize } = require('./models/index');
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // 라우터
 app.use('/auth', authRouter);
+app.use('/profile', profileRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

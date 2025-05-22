@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 exports.join = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password } = req.body;
   if (!email || !password) {
     return res.json({
       message: '이메일 혹은 비밀번호 미입력',
@@ -28,7 +28,9 @@ exports.join = async (req, res) => {
     await User.create({
       email,
       password: hash,
-      name,
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      address: req.body.address,
     });
     return res.json({
       message: '회원 가입이 완료되었습니다.',
