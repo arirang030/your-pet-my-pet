@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = models => {
     User.hasMany(models.Pet, { foreignKey: 'userId' });
-    User.hasMany(models.Match, { foreignKey: 'requesterId', as: 'RequestedMatches' });
-    User.hasMany(models.Match, { foreignKey: 'caregiverId', as: 'CaregiverMatches' });
+    User.hasMany(models.Matching, { foreignKey: 'requesterId', as: 'RequestedMatches' });
+    User.hasMany(models.Matching, { foreignKey: 'caregiverId', as: 'CaregiverMatches' });
     User.hasMany(models.PetCareReq, { foreignKey: 'requesterId' });
     User.hasOne(models.Verification, { foreignKey: 'userId' });
   };

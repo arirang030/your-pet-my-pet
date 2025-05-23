@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Reservation.associate = models => {
-    Reservation.belongsTo(models.Match, { foreignKey: 'matchId' });
+    Reservation.belongsTo(models.Matching, { foreignKey: 'matchId' });
   };
 
   return Reservation;
