@@ -1,23 +1,26 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
+const  service  = require('../services/auth');
 
 exports.join = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.json({
-      message: '이메일 혹은 비밀번호 미입력',
-      success: false,
-    });
-  };
-  if (email.includes(" ") || password.includes(" ")) {
-    return res.json({
-      message: '이메일 혹은 비밀번호에 공백이 포함되어 있습니다.',
-      success: false,
-    });
-  };
-  try {
-    const exUser = await User.findOne({ where: { email }});
+  try{
+    // req전처리
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.json({
+        message: '이메일 혹은 비밀번호 미입력',
+        success: false,
+      });
+    };
+    if (email.includes(" ") || password.includes(" ")) {
+      return res.json({
+        message: '이메일 혹은 비밀번호에 공백이 포함되어 있습니다.',
+        success: false,
+      });
+    };
+    // Service 호출
+    const exUser = await service.getUserByEmail(email);
     if (exUser) {
       return res.json({
         message: '이미 가입된 회원입니다.',
@@ -46,6 +49,7 @@ exports.join = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  // req 전처리
   const { email, password } = req.body;
   try {
     const exUser = await User.findOne({ where: { email } });
@@ -55,6 +59,7 @@ exports.login = async (req, res) => {
         success: false,
       });
     };
+    // 암호화 비밀번호 대조
     const result = await bcrypt.compare(password, exUser.password);
     if (!result) {
       return res.json({
