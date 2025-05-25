@@ -8,6 +8,22 @@ class UserRepository{
         });
 
     }
+
+    async createUser(email, pswd, name, phoneNumber, address){
+        try{
+            User.create({
+            email,
+            password: pswd,
+            name: name,
+            phoneNumber: phoneNumber,
+            address: address,
+        });
+        }
+        catch(err){
+            throw Error();
+        }
+        
+    }
 }
 
 module.exports = new UserRepository();

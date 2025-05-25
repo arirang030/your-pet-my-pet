@@ -2,49 +2,48 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 //const { User } = require('../models');
 const  service  = require('../services/AuthService');
+const { AuthError, DuplicateUserError } = require("../errors/AuthError");
 
 exports.join = async (req, res) => {
   try{
     // req전처리
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.json({
-        message: '이메일 혹은 비밀번호 미입력',
-        success: false,
-      });
+      throw AuthError('이메일 혹은 비밀번호 미입력', 400);
     };
     if (email.includes(" ") || password.includes(" ")) {
-      return res.json({
-        message: '이메일 혹은 비밀번호에 공백이 포함되어 있습니다.',
-        success: false,
-      });
+      throw AuthError('입력값에 공백이 포함되어있습니다.', 400);
     };
+
     // Service 호출
-    const exUser = await service.getUserByEmail(email);
-    if (exUser) {
-      return res.json({
-        message: '이미 가입된 회원입니다.',
-        success: false,
-      });
-    }
-    const hash = await bcrypt.hash(password, 12);
-    await User.create({
-      email,
-      password: hash,
-      name: req.body.name,
-      phoneNumber: req.body.phoneNumber,
-      address: req.body.address,
-    });
+    const result = service.registerUser(req,email, password);
+    
     return res.json({
       message: '회원 가입이 완료되었습니다.',
       success: true,
     });
   } catch (err) {
     console.error(err);
-    return res.json({
+
+    if (err instanceof DuplicateUserError){
+      return res.json({
+        message: err.message,
+        success: err.success,
+      })
+    }
+    else if (err instanceof AuthError){
+      return res.json({
+        message: err.message,
+        success: err.success,
+      })
+    }
+    else{
+      return res.json({
       message: '회원 가입 중 에러 발생',
       success: false,
     });
+    }
+    
   };
 };
 
