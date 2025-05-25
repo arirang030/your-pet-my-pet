@@ -9,7 +9,7 @@ class userRepository{
 
   async createUser(email, password, name, phoneNumber, address) {
     try{
-      User.create({
+      await User.create({
         email,
         password,
         name,
