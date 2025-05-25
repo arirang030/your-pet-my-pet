@@ -18,7 +18,7 @@ class userRepository{
       });
     }
     catch (err){
-      throw AuthError();
+      throw new AuthError();
     }
   }
 

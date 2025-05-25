@@ -1,7 +1,6 @@
-const { AuthError, DuplicateUserError, UnregisteredEmailError, IncorrectPasswordError } = require("../errors/AuthError");
+const { AuthError, DuplicateUserError, UnregisteredEmailError, IncorrectPasswordError, JoinError } = require("../errors/AuthError");
 const { InvalidConnectionError } = require('sequelize');
-const  service  = require('../services/authService');
-const { JoinError } = require("../errors/AuthError");
+const  service  = require('../services/AuthService');
 
 exports.join = async (req, res) => {
   try{

@@ -52,4 +52,3 @@ module.exports = {
     JoinError,
     LoginError
 }
-module.exports = { JoinError, DuplicateUserError, LoginError };

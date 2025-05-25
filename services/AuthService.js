@@ -1,5 +1,6 @@
 const repo = require("../repository/userRepository");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { DuplicateUserError, IncorrectPasswordError, UnregisteredEmailError,JoinError } = require("../errors/AuthError");
 
 class authService{
@@ -17,7 +18,8 @@ class authService{
 
 
     const hash = await bcrypt.hash(password, 12);
-    return await this.createUser(email, hash, name, phoneNumber, address);
+    return await repo.createUser(email, hash, name, phoneNumber, address);
+
   }
     
   async checkEmailExists(email) {
