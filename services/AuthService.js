@@ -9,7 +9,7 @@ class AuthService{
         return user;
     }
 
-    async registerUser(user, email, password){
+    async registerUser(user, email, password) {
         try{
             const exUser = await this.getUserByEmail(email);
 
@@ -20,11 +20,8 @@ class AuthService{
             await repo.createUser(email, hash, user.body.name, user.body.phoneNumber, user.body.address);
 
         } catch (err){
-            throw Error();
-        }
-        
-
-        
+            throw err;
+        }  
     }
 }
 

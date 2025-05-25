@@ -9,14 +9,14 @@ exports.join = async (req, res) => {
     // req전처리
     const { email, password } = req.body;
     if (!email || !password) {
-      throw AuthError('이메일 혹은 비밀번호 미입력', 400);
+      throw new AuthError('이메일 혹은 비밀번호 미입력', 400);
     };
     if (email.includes(" ") || password.includes(" ")) {
-      throw AuthError('입력값에 공백이 포함되어있습니다.', 400);
+      throw new AuthError('입력값에 공백이 포함되어있습니다.', 400);
     };
 
     // Service 호출
-    const result = service.registerUser(req,email, password);
+    await service.registerUser(req,email, password);
     
     return res.json({
       message: '회원 가입이 완료되었습니다.',
