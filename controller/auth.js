@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-//const { User } = require('../models');
 const  service  = require('../services/AuthService');
 const { AuthError, DuplicateUserError, UnregisteredEmailError, IncorrectPasswordError } = require("../errors/AuthError");
 const { InvalidConnectionError } = require('sequelize');
