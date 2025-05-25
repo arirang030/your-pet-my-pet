@@ -16,4 +16,25 @@ class DuplicateUserError extends AuthError{
     }
 }
 
-module.exports = {AuthError, DuplicateUserError}
+class UnregisteredEmailError extends AuthError{
+    constructor(){
+        super('가입되지 않은 이메일입니다.', 409);
+        this.name = 'UnregisteredEmailError';
+        this.success = false;
+    }
+}
+
+class IncorrectPasswordError extends AuthError{
+    constructor(){
+        super('비밀번호가 일치하지 않습니다.', 409);
+        this.name = 'IncorrectPasswordError';
+        this.success = false;
+    }
+}
+
+module.exports = {
+    AuthError, 
+    DuplicateUserError,
+    UnregisteredEmailError,
+    IncorrectPasswordError
+}

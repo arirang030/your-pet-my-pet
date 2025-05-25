@@ -11,7 +11,7 @@ class UserRepository{
 
     async createUser(email, pswd, name, phoneNumber, address){
         try{
-            User.create({
+            await User.create({
             email,
             password: pswd,
             name: name,
@@ -20,7 +20,7 @@ class UserRepository{
         });
         }
         catch(err){
-            throw Error();
+            throw err;
         }
         
     }

@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 //const { User } = require('../models');
 const  service  = require('../services/AuthService');
-const { AuthError, DuplicateUserError } = require("../errors/AuthError");
+const { AuthError, DuplicateUserError, UnregisteredEmailError, IncorrectPasswordError } = require("../errors/AuthError");
+const { InvalidConnectionError } = require('sequelize');
 
 exports.join = async (req, res) => {
   try{
@@ -44,35 +45,15 @@ exports.join = async (req, res) => {
     });
     }
     
-  };
+  }
 };
 
 exports.login = async (req, res) => {
   // req 전처리
   const { email, password } = req.body;
   try {
-    const exUser = await User.findOne({ where: { email } });
-    if (!exUser) {
-      return res.json({
-        message: '가입되지 않은 이메일입니다.',
-        success: false,
-      });
-    };
-    // 암호화 비밀번호 대조
-    const result = await bcrypt.compare(password, exUser.password);
-    if (!result) {
-      return res.json({
-        message: '비밀번호가 일치하지 않습니다.',
-        success: false,
-      });
-    };
-
-    // 토큰 생성(유효 기간: 하루)
-    const token = jwt.sign(
-      { id: exUser.id, email: exUser.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d"},
-    );
+    //service 호출
+    const token = await service.login(email, password);
 
     return res.json({
       message: '로그인 성공!',
@@ -81,9 +62,24 @@ exports.login = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    return res.json({
+    if (err instanceof UnregisteredEmailError){
+      return res.json({
+      message: err.message,
+      success: false,
+    });
+    }
+    else if (err instanceof IncorrectPasswordError){
+      return res.json({
+      message: err.message,
+      success: false,
+    });
+    }
+    else{
+      return res.json({
       message: '로그인 중 에러 발생',
       success: false,
     });
+    }
+    
   };
 };
