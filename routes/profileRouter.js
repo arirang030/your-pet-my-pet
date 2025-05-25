@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn } = require('../middlewares');
-const { getProfile } = require('../controller/profile');
+const { getProfile } = require('../controller/profileController');
 const router = express.Router();
 
 // GET /profile

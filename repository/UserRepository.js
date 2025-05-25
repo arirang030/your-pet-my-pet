@@ -1,29 +1,27 @@
 const { User } = require('../models');
+const { AuthError } = require('../errors/AuthError');
 
-class UserRepository{
+class userRepository{
 
-    async findByEmail(email) {
-        return await User.findOne({ 
-            where: { email }
-        });
+  async findByEmail(email) {
+    return await User.findOne({ where: { email } });
+  }
 
+  async createUser(email, password, name, phoneNumber, address) {
+    try{
+      User.create({
+        email,
+        password,
+        name,
+        phoneNumber,
+        address,
+      });
     }
-
-    async createUser(email, pswd, name, phoneNumber, address){
-        try{
-            User.create({
-            email,
-            password: pswd,
-            name: name,
-            phoneNumber: phoneNumber,
-            address: address,
-        });
-        }
-        catch(err){
-            throw Error();
-        }
-        
+    catch (err){
+      throw AuthError();
     }
+  }
+
 }
 
-module.exports = new UserRepository();
+module.exports = new userRepository();

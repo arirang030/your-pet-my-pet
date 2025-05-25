@@ -1,13 +1,20 @@
 const { Pet } = require('../models');
 
-class PetRepository{
+class petRepository{
 
-    async findByUserId(userId){
-        return await Pet.findOne({
-            where: { userId }
-        });
+  async findByUserId(userId){
+    return await Pet.findOne({ where: { userId } });
+  }
 
-    }
+  async createPet(name, breed, age, personality, userId) {
+    return await Pet.create({
+      name,
+      breed,
+      age,
+      personality,
+      userId,
+    });
+  };
 }
 
-module.exports = new PetRepository();
+module.exports = new petRepository();

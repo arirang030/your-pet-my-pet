@@ -1,9 +1,9 @@
-const service = require('../services/PetService');
+const service = require('../services/petService');
 
 exports.getPet = async (req, res) => {
   try {
     const userId = req.user.id;
-    const pet = service.getPetByUserId(userId);
+    const pet = await service.getPetByUserId(userId);
     if (!pet) {
       return res.json({
         message: "등록된 펫이 없습니다.",
@@ -39,13 +39,7 @@ exports.postPet = async (req, res) => {
         success: false,
       });
     }
-    const pet = await Pet.create({
-      name,
-      breed,
-      age,
-      personality,
-      userId: req.user.id,
-    });
+    const pet = await service.createPet(name, breed, age, personality, req.user.id);
     return res.json({
       message: "펫이 성공적으로 등록되었습니다.",
       success: true,

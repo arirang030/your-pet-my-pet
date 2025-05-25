@@ -7,9 +7,9 @@ const cors = require('cors');
 
 dotenv.config();
 
-const authRouter = require('./routes/auth');
-const profileRouter = require('./routes/profile');
-const petRouter = require('./routes/pet');
+const authRouter = require('./routes/authRouter');
+const profileRouter = require('./routes/profileRouter');
+const petRouter = require('./routes/petRouter');
 
 const { sequelize } = require('./models/index');
 const app = express();

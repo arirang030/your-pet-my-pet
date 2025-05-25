@@ -1,11 +1,15 @@
-const repo = require("../repository/PetRepository");
+const repo = require("../repository/petRepository");
 
-class PetService{
+class petService{
 
-    async getPetByUserId(userId){
-        const pet = await repo.findByUserId(userId);
-        return pet;
-    }
+  async getPetByUserId(userId){
+    const pet = await repo.findByUserId(userId);
+    return pet;
+  }
+
+  async createPet(name, breed, age, personality, userId) {
+    return await repo.createPet(name, breed, age, personality, userId);
+  }
 }
 
-module.exports = new PetService();
+module.exports = new petService();

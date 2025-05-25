@@ -1,31 +1,24 @@
-const repo = require("../repository/UserRepository");
-const jwt = require('jsonwebtoken');
+const repo = require("../repository/userRepository");
 const bcrypt = require('bcrypt');
-const { DuplicateUserError } = require("../errors/AuthError");
-class AuthService{
-    
-    async getUserByEmail(email) {
-        const user = await repo.findByEmail(email);
-        return user;
-    }
+const { DuplicateUserError, JoinError } = require("../errors/AuthError");
 
-    async registerUser(user, email, password){
-        try{
-            const exUser = await this.getUserByEmail(email);
+class authService {
+  async registerUser(email, password, name, phoneNumber, address) {
+    const exUser = await this.checkEmailExists(email);
+    if (exUser) throw new DuplicateUserError();
 
-            if (exUser) throw new DuplicateUserError();
+    const hash = await bcrypt.hash(password, 12);
+    return await this.createUser(email, hash, name, phoneNumber, address);
+  }
 
-            const hash = await bcrypt.hash(password, 12);
+  async checkEmailExists(email) {
+    return await repo.findByEmail(email);
+  }
 
-            await repo.createUser(email, hash, user.body.name, user.body.phoneNumber, user.body.address);
-
-        } catch (err){
-            throw Error();
-        }
-        
-
-        
-    }
+  async createUser(email, password, name, phoneNumber, address) {
+    return await repo.createUser(email, password, name, phoneNumber, address);
+  }
 }
 
-module.exports = new AuthService();
+
+module.exports = new authService();

@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn } = require('../middlewares');
-const { requestVerification, checkVerificationResult } = require('../controller/verify');
+const { requestVerification, checkVerificationResult } = require('../controller/verifyController');
 const router = express.Router();
 
 // GET /badge

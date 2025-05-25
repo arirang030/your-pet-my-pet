@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn } = require('../middlewares');
-const { getPet, postPet } = require('../controller/pet');
+const { getPet, postPet } = require('../controller/petController');
 const router = express.Router();
 
 // GET /pet
