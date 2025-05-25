@@ -1,4 +1,4 @@
-const repo = require("../repository/UserRepository")
+const repo = require("../repository/UserRepository");
 
 class AuthService{
 

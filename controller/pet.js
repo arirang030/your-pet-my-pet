@@ -1,9 +1,9 @@
-const { Pet } = require('../models');
+const service = require('../services/PetService');
 
 exports.getPet = async (req, res) => {
   try {
     const userId = req.user.id;
-    const pet = await Pet.findOne({ where: { userId } });
+    const pet = service.getPetByUserId(userId);
     if (!pet) {
       return res.json({
         message: "등록된 펫이 없습니다.",
