@@ -22,6 +22,14 @@ class userRepository{
     }
   }
 
+  async findUserProfile(userId){
+
+    return await User.findOne({
+      where: { id: userId },
+      attributes: ['email', 'name', 'phoneNumber', 'address'],
+    })
+  }
+
 }
 
 module.exports = new userRepository();

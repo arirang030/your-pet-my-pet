@@ -1,12 +1,11 @@
-const { User } = require('../models')
+const repo = require('../repository/userRepository');
 
 exports.getProfile = async (req, res) => {
   const userId = req.user.id;
   try {
-    const profile = await User.findOne({
-      where: { id: userId },
-      attributes: ['email', 'name', 'phoneNumber', 'address'],
-    });
+    
+    const profile = await repo.findUserProfile(userId);
+
     if (!profile) {
       return res.json({
         message: "해당 유저에 대한 정보가 없습니다.",
