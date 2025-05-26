@@ -10,6 +10,7 @@ dotenv.config();
 const authRouter = require('./routes/authRouter');
 const profileRouter = require('./routes/profileRouter');
 const petRouter = require('./routes/petRouter');
+const matchingRouter = require('./routes/matchingRouter');
 
 const { sequelize } = require('./models/index');
 const app = express();
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/pet', petRouter);
+app.use('/matching', matchingRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
