@@ -6,6 +6,19 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: { type: DataTypes.STRING(20), allowNull: false },
     address: { type: DataTypes.STRING, allowNull: false },
     hasBadge: { type: DataTypes.TINYINT, allowNull: false, defaultValue: 0 },
+    role: {
+      type: DataTypes.ENUM('user', 'admin'),
+      allowNull:false,
+      defaultValue: 'user',
+    },
+    availableStart: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    availableEnd: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   }, {
   }, {
     tableName: 'users',
