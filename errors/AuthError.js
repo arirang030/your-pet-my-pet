@@ -22,13 +22,13 @@ class DuplicateUserError extends JoinError {
 };
 
 class LoginError extends AuthError {
-  constructor() {
-    super('로그인 중 문제가 발생했습니다.', 500);
+  constructor(msg='로그인 중 문제가 발생했습니다.', status=500) {
+    super(msg, status);
     this.name = 'LoginError';
   }
 }
 
-class UnregisteredEmailError extends AuthError{
+class UnregisteredEmailError extends LoginError {
     constructor(){
         super('가입되지 않은 이메일입니다.', 409);
         this.name = 'UnregisteredEmailError';
@@ -36,7 +36,7 @@ class UnregisteredEmailError extends AuthError{
     }
 }
 
-class IncorrectPasswordError extends AuthError{
+class IncorrectPasswordError extends LoginError {
     constructor(){
         super('비밀번호가 일치하지 않습니다.', 409);
         this.name = 'IncorrectPasswordError';

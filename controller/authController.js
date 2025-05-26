@@ -1,5 +1,4 @@
-const { AuthError, DuplicateUserError, UnregisteredEmailError, IncorrectPasswordError, JoinError } = require("../errors/AuthError");
-const { InvalidConnectionError } = require('sequelize');
+const { JoinError, LoginError } = require("../errors/AuthError");
 const  service  = require('../services/AuthService');
 
 exports.join = async (req, res) => {
@@ -22,33 +21,25 @@ exports.join = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-
-    if (err instanceof DuplicateUserError){
-      return res.json({
-        message: err.message,
-        success: err.success,
-      })
-    }
-    else if (err instanceof AuthError){
-      return res.json({
-        message: err.message,
-        success: err.success,
-      })
-    }
-    else{
-      return res.json({
-      message: '회원 가입 중 에러 발생',
-      success: false,
+    return res.status(err.status).json({
+      message: err.message,
+      success: err.success,
     });
-    }
-    
-  }
+  };
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
   try {
-    //service 호출
+    // req 전처리
+    const { email, password } = req.body;
+    if (!email || !password) {
+      throw new LoginError('모든 필드를 입력해 주세요.', 400);
+    };
+    if (email.includes(" ") || password.includes(" ")) {
+      throw new LoginError('입력값에 공백이 포함되어있습니다.', 400);
+    };
+
+    // Service 호출
     const token = await service.login(email, password);
 
     return res.json({
@@ -58,24 +49,9 @@ exports.login = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    if (err instanceof UnregisteredEmailError){
-      return res.json({
+    return res.status(err.status).json(({
       message: err.message,
-      success: false,
-    });
-    }
-    else if (err instanceof IncorrectPasswordError){
-      return res.json({
-      message: err.message,
-      success: false,
-    });
-    }
-    else{
-      return res.json({
-      message: '로그인 중 에러 발생',
-      success: false,
-    });
-    }
-    
+      success: err.success,
+    }));
   };
 };
