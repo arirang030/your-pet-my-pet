@@ -33,6 +33,7 @@ class userRepository {
   async getCaregiversByRequest(address, startAt, endAt) {
     return await User.findAll({
       where: {
+        hasBadge: 1,
         address: address,
         availableStart: { [Op.lte]: startAt },
         availableEnd: { [Op.gte]: endAt }
