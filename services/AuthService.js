@@ -20,6 +20,11 @@ class authService{
     return await repo.findByEmail(email);
   }
 
+  // id로 유저 정보 가져오기
+  async getUserById(id) {
+    return await repo.findById(id);
+  }
+
   // 로그인
   async login(email, password){
     try{

@@ -14,7 +14,7 @@ class verifyService {
 
   // 인증 자료 확인 여부 체크
   async checkVerified(userId) {
-    const file = await repo.findAFile(userId);
+    const file = await repo.findByUserId(userId);
     if (!file) {
       throw new VerificationNotFoundError();
     }

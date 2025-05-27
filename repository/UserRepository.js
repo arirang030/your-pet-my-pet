@@ -7,6 +7,10 @@ class userRepository{
     return await User.findOne({ where: { email } });
   }
 
+  async findById(id) {
+    return await User.findOne({ where: { id } });
+  }
+
   async createUser(email, password, name, phoneNumber, address) {
     try{
       await User.create({
