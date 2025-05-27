@@ -10,7 +10,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('user', 'admin'),
       allowNull: false,
       defaultValue: 'user',
-    }
+    },
+    availableStart: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    availableEnd: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   }, {
   }, {
     tableName: 'users',
