@@ -32,7 +32,7 @@ class MatchingRepository {
         try{
             return await Request.findAll();
         } catch(err){
-            throw new Error();
+            throw new Error("DB접근오류류");
         }
     }
 
@@ -42,9 +42,21 @@ class MatchingRepository {
                 where: {requesterId: userId}
             });
         } catch(err){
-            throw new Error();
+            throw new Error("DB접근오류류");
         }
     }
+
+    async getReservationById(userId){
+        try{
+            return await Reservation.findAll({
+                where: {requesterId: userId}
+            });
+        } catch(err){
+            throw new Error("DB접근오류");
+        }
+    }
+
+    async getAllCaregiver
 
 }
 

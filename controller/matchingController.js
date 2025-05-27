@@ -34,3 +34,20 @@ exports.postMatchingRequest = async (req, res) => {
     }
 
 }
+
+exports.startMatching = async (req, res) => {
+
+    try {
+        await service.makeReservation(req.user.id);
+    } catch (err) {
+        console.log(err.message);
+        return res.json({
+            message: err.message,
+            success: false,
+        });
+    }
+
+
+
+
+}
