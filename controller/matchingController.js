@@ -42,7 +42,7 @@ exports.startMatching = async (req, res) => {
         return res.json({
             message: "매칭성공! 예약확정을 기다려주세요.",
             success: true,
-        })
+        });
     } catch (err) {
         console.log(err.message);
         return res.json({
@@ -54,8 +54,16 @@ exports.startMatching = async (req, res) => {
 
 exports.testMakeReservation = async (req, res) => {
     try {
-        
+        await service.makeReservation(req.user.id);
+        return res.json({
+            message: "케어예약이 확정되었습니다.",
+            success: true,
+        });
     } catch (err) {
-        
+        console.log(err.message);
+        return res.json({
+            message: err.message,
+            success: false,
+        });
     }
 }

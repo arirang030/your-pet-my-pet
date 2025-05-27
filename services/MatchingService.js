@@ -37,7 +37,26 @@ class MatchingService {
 
     }
 
-    async save
+    //미완성
+    async makeReservation(userId) {
+
+        try {
+            const match = await repoMatching.getMatchingById(userId);
+
+            if (match.length == 0) throw Error("확정중인 매칭칭내역이 없습니다.");
+
+            //테스트상황 가정
+            const mt = match[0];
+            const mtInfo = await repoMatching.getPetCareRequestByReqId(mt.requestId);
+            if (mt.status == "matched") {
+
+                await repoMatching.saveReservation(mtInfo.startTime, mtInfo.endTime, mt.id);
+
+            }
+        } catch(err){
+            throw err;
+        }
+    }
 }
 
 

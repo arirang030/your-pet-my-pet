@@ -32,7 +32,19 @@ class MatchingRepository {
         try{
             return await Request.findAll();
         } catch(err){
-            throw new Error("DB접근오류류");
+            throw new Error("DB접근오류");
+        }
+    }
+
+    async getPetCareRequestByReqId(reqId){
+        try{
+            return await Request.findOne({
+                where:{
+                    id: reqId,
+                }
+            });
+        } catch(err){
+            throw new Error("DB접근오류");
         }
     }
 
@@ -42,7 +54,17 @@ class MatchingRepository {
                 where: {requesterId: userId}
             });
         } catch(err){
-            throw new Error("DB접근오류류");
+            throw new Error("DB접근오류");
+        }
+    }
+
+    async getMatchingById(userId){
+        try{
+            return await Matching.findAll({
+                where: {requesterId: userId}
+            });
+        } catch(err){
+            throw new Error("DB접근오류");
         }
     }
 
@@ -68,6 +90,21 @@ class MatchingRepository {
             requestId: requestId,
 
             
+        });
+        } catch(err){
+            console.log("MatchingRepository에서 문제 발생.");
+            console.log(err.message);
+
+            throw err;
+        }
+    }
+
+    async saveReservation(startTime, endTime, matchId){
+        try{
+            return await Reservation.create({
+                startTime: startTime,
+                endTime: endTime,
+                matchId: matchId,
         });
         } catch(err){
             console.log("MatchingRepository에서 문제 발생.");
