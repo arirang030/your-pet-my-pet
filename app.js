@@ -37,6 +37,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/pet', petRouter);
+app.use('/verify', verifyRouter);
+app.use('/admin', adminRouter);
+app.use('/matching', matchingRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

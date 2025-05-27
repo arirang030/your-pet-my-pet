@@ -1,7 +1,8 @@
 const repoMatching = require('../repository/MatchingRepository');
-const repoPet = require('../repository/PetRepository');
-const repoUser = require('../repository/UserRepository');
-const { EmptyPetError } = require('../errors/PetError')
+const repoPet = require('../repository/petRepository');
+const repoUser = require('../repository/userRepository');
+const { EmptyPetError } = require('../errors/PetError');
+
 class MatchingService {
 
     //요청사항 저장
@@ -62,11 +63,5 @@ class MatchingService {
         }
     }
 }
-
-
-
-
-
-
 
 module.exports = new MatchingService();
