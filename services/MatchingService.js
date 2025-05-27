@@ -25,7 +25,11 @@ class MatchingService {
 
             if (careRequests.length == 0) throw Error("진행중인 매칭이 없습니다.");
 
-            const caregivers = await repoUser.getCaregiversByRequest();
+            //테스트 가정
+            const cr = careRequests[0];
+            const requester = await repoUser.findUserProfile(requesterId);
+            //
+            const caregivers = await repoUser.getCaregiversByRequest(requester.address, cr.startTime, cr.endTime);
 
 
             //request는 한개만 있다고 가정.

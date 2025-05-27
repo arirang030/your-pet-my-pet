@@ -24,13 +24,14 @@ class MatchingRepository {
             requesterId: requesterId
         });
         } catch(err){
+            console.log("savePetCareRequest에서 에러");
             throw err;
         }
     }
 
     async getAllPetCareRequest(){
         try{
-            return await Request.findAll();
+            return await PetCareReq.findAll();
         } catch(err){
             throw new Error("DB접근오류");
         }
@@ -38,7 +39,7 @@ class MatchingRepository {
 
     async getPetCareRequestByReqId(reqId){
         try{
-            return await Request.findOne({
+            return await PetCareReq.findOne({
                 where:{
                     id: reqId,
                 }
@@ -50,10 +51,11 @@ class MatchingRepository {
 
     async getAllPetCareRequestById(userId){
         try{
-            return await Request.findAll({
+            return await PetCareReq.findAll({
                 where: {requesterId: userId}
             });
         } catch(err){
+            console.log(err.message);
             throw new Error("DB접근오류");
         }
     }
@@ -64,6 +66,7 @@ class MatchingRepository {
                 where: {requesterId: userId}
             });
         } catch(err){
+            console.log(err.message);
             throw new Error("DB접근오류");
         }
     }
@@ -74,6 +77,7 @@ class MatchingRepository {
                 where: {requesterId: userId}
             });
         } catch(err){
+            console.log(err.message);
             throw new Error("DB접근오류");
         }
     }
