@@ -56,7 +56,26 @@ class MatchingRepository {
         }
     }
 
-    async getAllCaregiver
+    async saveMatching(reqId, giverId,requestId){
+        try{
+            return await Matching.create({
+            matchedAt: new Date(),
+            //초기상태는 'requested'
+            //제공자가 매칭결과를 받아들였다고 가정.
+            status: 'matched',
+            requesterId: reqId,
+            caregiverId: giverId,
+            requestId: requestId,
+
+            
+        });
+        } catch(err){
+            console.log("MatchingRepository에서 문제 발생.");
+            console.log(err.message);
+
+            throw err;
+        }
+    }
 
 }
 
