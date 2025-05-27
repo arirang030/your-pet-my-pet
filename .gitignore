@@ -20,3 +20,5 @@ yarn-error.log*
 
 # config file
 config/config.json
+
+uploads/
