@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   PetCareReq.associate = models => {
     PetCareReq.belongsTo(models.User, { foreignKey: 'requesterId' });
     PetCareReq.belongsTo(models.Pet, { foreignKey: 'petId' });
+    PetCareReq.hasOne(models.Matching, { foreignKey: 'requestId' });
   };
 
   return PetCareReq;

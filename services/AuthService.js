@@ -15,7 +15,7 @@ class authService{
     return await repo.createUser(email, hash, name, phoneNumber, address);
   }
   
-  // UserRepository에 해당 이메일이 있는지 검사
+  // 이메일로 유저 정보 가져오기
   async getUserByEmail(email) {
     return await repo.findByEmail(email);
   }

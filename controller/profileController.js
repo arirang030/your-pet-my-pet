@@ -5,7 +5,7 @@ exports.getProfile = async (req, res) => {
   try {
     const profile = await User.findOne({
       where: { id: userId },
-      attributes: ['email', 'name', 'phoneNumber', 'address'],
+      attributes: ['email', 'name', 'phoneNumber', 'address', 'role'],
     });
     if (!profile) {
       return res.json({
