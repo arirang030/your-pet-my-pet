@@ -31,7 +31,7 @@ class authService{
       if (!result) throw new IncorrectPasswordError();
       // 토큰 생성 (유효 기간: 하루)
       const token = jwt.sign(
-        { id: exUser.id, email: exUser.email },
+        { id: exUser.id, email: exUser.email, role: exUser.role },
         process.env.JWT_SECRET,
         { expiresIn: "1d"},
         );
