@@ -1,3 +1,5 @@
+const verifyService = require('../services/verifyService');
+
 exports.requestVerification = async (req, res) => {
   try {
     const { file, body, user } = req;
